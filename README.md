@@ -11,15 +11,29 @@ In an initiative to help them experience the beauty of the images, Facebook had 
 
 In this project, I will attempt to make a ML model that is similar to the one developed by Facebook, specifically such that a blind person knows the contents of an image in front of them with the help of a CNN-RNN based model. The model will convert the contents of an image and will provide the output in the form of audio.
 
+## Problem Statement
+To create a deep learning model based solution which can explain the content of an image in the form of an audio through caption generation using attentaion mechanism on Flickr8 Dataset.
+
 ## Approach
-We are going to base our approach on an approach similar to the one proposed in  https://arxiv.org/abs/1502.03044[[1]](#1).
+We are going to base our approach on an approach similar to the one proposed in [[1]](#1).
 
 This solution will take an image as its input and play an audio describing the contents of image as its output.
 
 At a highlevel, the solution has two distinct parts
 
-1. __Image to Text Generator (ITG):__ This is reposnsible for taking an image as input and generating a textual description of the content of image in English language. The text thus generated would serve as input to the second part of the solution.
-2. __Text To Speech Converter (TTSC):__ This part is responsible for taking an English language text as input and play an audio equivalent of the input text.
+1. __Image to Text Generator (ITG):__ This is reposnsible for taking an image as input and generating a textual description of the content of image in English language. The text thus generated would serve as input to the second part of the solution. ITG would be a CNN-plus-RNN based model which would generate caption for the input image.
+2. __Text To Speech Converter (TTSC):__ This part is responsible for taking an English language text as input and play an audio equivalent of the input text. This part of the solution would make use of a Text-To-Speech library to convert caption to a speech.
+
+
+## Outline of Solution
+We are attempting to solve two Machine Vision problems
+
+1. Object Detection in a given image
+2. Capturing relationships between detected objects
+
+An image can be easily fed to a CNN to extract high level features. These highlevel features can then act as an input to an RNN, which can generate caption from the input text description of detected objects and their relationships.
+
+Solution to the first part of problem is releatively easier. The challenging part is not just to capture relation ships beteen detected objects, but also to find out the object which is going to be the "focus area" for the caption. In this sense, we  need some way to give "attention" to sepcific parts of the image. Therefore, we would be using approach called 'Attention Model' and extend our CNN-RNN model to include an Attention model. This Attention model would sit in between CNN and RNN. The job of Attention model would be proveide input to RNN, but only for the portion which is having "attention". See [[1]](#1) for an excellent work on Attention Models, which serves as basis for our solution.
 
 ## References
 <a id="1">[1]</a> 
